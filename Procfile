@@ -1,0 +1,1 @@
+worker: python serie-nacional-bot.py

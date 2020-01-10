@@ -7,6 +7,7 @@ import datetime
 import re
 import fun
 import math
+import os
 
 URL = "http://beisbolencuba.com"
 
@@ -234,7 +235,13 @@ def echo(update, context):
 
 
 def main():
-    updater = Updater("1026034352:AAGeZU17EPC4H7E-cNbQKlX58yQJ3ZmLGdw", use_context=True)
+    
+    TOKEN_TEST = os.environ.get('TOKEN_TEST')
+    
+    if TOKEN_TEST == None:
+        from env import TOKEN_TEST
+    
+    updater = Updater(TOKEN_TEST, use_context=True)
 
 
     dp = updater.dispatcher
@@ -253,7 +260,6 @@ def main():
     updater.start_polling()
 
     updater.idle()
-
 
 if __name__ == '__main__':
     main()

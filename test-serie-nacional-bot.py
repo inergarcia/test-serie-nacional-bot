@@ -8,6 +8,7 @@ import re
 import fun
 import math
 import os
+import emoji
 
 URL = "http://beisbolencuba.com"
 
@@ -24,10 +25,18 @@ logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s
 logger = logging.getLogger(__name__)
 
 
-#def start(update, context):
-#    update.message.reply_text('Estadisticas de la Serie Nacional' + '\n' + '/help')
 
 def start(update, context):
+    manito = emoji.emojize(':backhand_index_pointing_right:')
+    cartel = '\u26BE' + 'Serie Nacional de Béisbol' + '\u26BE' + '\n\n'
+    cartel = cartel + manito + '  Estadísticas' + '\n'
+    cartel = cartel + manito + '  Partidos' + '\n'
+    cartel = cartel + manito + '  Posisiones' + '\n'
+    update.message.reply_text(cartel)
+    update.message.reply_text('/menu')
+ 
+
+def menu(update, context):
     keyboard = [[InlineKeyboardButton("Partidos", callback_data="1"),
                  InlineKeyboardButton("Partidos de Hoy", callback_data="2")],
                 [InlineKeyboardButton("Posisiones Play Off Final", callback_data="3")],
@@ -36,26 +45,23 @@ def start(update, context):
                 [InlineKeyboardButton("Posisiones 1ra Etapa", callback_data="6")]]
 
     reply_markup = InlineKeyboardMarkup(keyboard)
-
-    update.message.reply_text("Estadisticas de la Serie Nacional!!!");
-    update.message.reply_text('Selecione una opcion:', reply_markup=reply_markup)
+    update.message.reply_text('Selecione una opción:', reply_markup=reply_markup)
 
 def button(update, context):
     query = update.callback_query
 
     if query.data == '1':
-        query.edit_message_text(text=getPlayStatus())
+        query.edit_message_text(text=getPlayStatus()+'/menu')
     if query.data == '2':
-        query.edit_message_text(text=getPlayHoy())
+        query.edit_message_text(text=getPlayHoy()+'/menu')
     if query.data == '3':
-        query.edit_message_text(text=getTableposition(0))
+        query.edit_message_text(text=getTableposition(0)+'/menu')
     if query.data == '4':
-        query.edit_message_text(text=getTableposition(1))
+        query.edit_message_text(text=getTableposition(1)+'/menu')
     if query.data == '5':
-        query.edit_message_text(text=getTableposition(2))
+        query.edit_message_text(text=getTableposition(2)+'/menu')
     if query.data == '6':
-        query.edit_message_text(text=getTableposition(3))
-    
+        query.edit_message_text(text=getTableposition(3)+'/menu')
 
 def getPlayStatus():
     title = []
@@ -183,7 +189,7 @@ def getPlayHoy():
             cat = cat + cadena + '\n'
             #update.message.reply_text(cadena)
     if len(cat) == 0:
-        return "No hay partidos hoy"
+        return "No hay partidos hoy" + '\n'
     return cat
 
 def getTableposition(n_table):
@@ -247,6 +253,7 @@ def main():
     dp = updater.dispatcher
 
     dp.add_handler(CommandHandler("start", start))
+    dp.add_handler(CommandHandler("menu", menu))
     dp.add_handler(CallbackQueryHandler(button))
     dp.add_handler(CommandHandler("help", help))   
 

@@ -1,1 +1,1 @@
-worker: python serie-nacional-bot.py
+worker: python test-serie-nacional-bot.py

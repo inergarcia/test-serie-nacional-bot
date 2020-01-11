@@ -117,8 +117,8 @@ def getPlayStatus():
             if (index) % 2 == 0:
                 cadena = cadena + '\n'
         #update.message.reply_text(cadena)
-        res = res + cadena + '\n'
-        return res
+        res = res + cadena
+    return res
 
 def getPlayHoy():
     title = []

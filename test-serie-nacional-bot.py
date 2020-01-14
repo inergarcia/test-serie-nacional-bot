@@ -53,17 +53,17 @@ def button(update, context):
     query = update.callback_query
 
     if query.data == '1':
-        query.edit_message_text(text=getPlayStatus()+'/menu')
+        query.edit_message_text(text=getPlayStatus())
     if query.data == '2':
-        query.edit_message_text(text=getPlayHoy()+'/menu')
+        query.edit_message_text(text=getPlayHoy())
     if query.data == '3':
-        query.edit_message_text(text=getTableposition(0)+'/menu')
+        query.edit_message_text(text=getTableposition(0))
     if query.data == '4':
-        query.edit_message_text(text=getTableposition(1)+'/menu')
+        query.edit_message_text(text=getTableposition(1))
     if query.data == '5':
-        query.edit_message_text(text=getTableposition(2)+'/menu')
+        query.edit_message_text(text=getTableposition(2))
     if query.data == '6':
-        query.edit_message_text(text=getTableposition(3)+'/menu')
+        query.edit_message_text(text=getTableposition(3))
 
 def getPlayStatus():
     title = []

@@ -66,136 +66,36 @@ def button(update, context):
         query.edit_message_text(text=getTableposition(3))
 
 def getPlayStatus():
-    title = []
-    num_partidos = []
-    team  = []
-    carreras = []
-    new_carreras = []
 
     req = requests.get(URL)
 
     status_code = req.status_code
-    cadena = ''
 
     if status_code == 200:
         html = BeautifulSoup(req.text, "html.parser")
 
-        entradas = html.find_all('table', {'class' : 'fpgame'})
-    
-        for ent in entradas:
-            titulo = ent.find('a').getText()
-            title.append(titulo)
-            games = ent.find_all('table', {'class' : 'fpgt'})
-            num_partidos.append(len(games))
-            
-            for game in games:
-                equipo = game.find_all('span')
-                marca = game.find_all('b')
-                
-                for e in equipo:
-                    team.append(e.getText())
-                for m in marca:
-                    carreras.append(m.getText())
-
+        table = html.find_all('table', {'class' : 'fpgame'})
         
+        return fun.getPartidos(table, None)
+
     else:
-        #update.message.reply_text("Error code " + str(status_code))
         return  "Error code " + str(status_code)
 
-    res = ''
-    for ele in carreras:
-        if len(str(ele)) <= 2:
-            new_carreras.append(ele)
-
-    index = 0
-
-    for i in range(0, len(title)):
-        n = num_partidos[i]
-        cadena = title[i] + '\n'
-
-        for x in range(0, 2*n, 1):
-            cadena = cadena + team[index] + ' ' + new_carreras[index] + '\n'
-            index = index + 1
-            if (index) % 2 == 0:
-                cadena = cadena + '\n'
-        #update.message.reply_text(cadena)
-        res = res + cadena
-    return res
-
 def getPlayHoy():
-    title = []
-    num_partidos = []
-    team  = []
-    carreras = []
-    new_carreras = []
-    cadena = ''
-
-    fecha_hoy = datetime.datetime.now()
-
     req = requests.get(URL)
 
     status_code = req.status_code
 
-
     if status_code == 200:
         html = BeautifulSoup(req.text, "html.parser")
 
-        entradas = html.find_all('table', {'class' : 'fpgame'})
-    
-        for ent in entradas:
-            titulo = ent.find('a').getText()
-            title.append(titulo)
-            games = ent.find_all('table', {'class' : 'fpgt'})
-            num_partidos.append(len(games))
-            
-            for game in games:
-                equipo = game.find_all('span')
-                marca = game.find_all('b')
-                
-                for e in equipo:
-                    team.append(e.getText())
-                for m in marca:
-                    carreras.append(m.getText())
-
-        
+        table = html.find_all('table', {'class' : 'fpgame'})
+        fecha_hoy = datetime.datetime.now()
+        return fun.getPartidos(table, fecha_hoy)
     else:
-        #update.message.reply_text("Error code " + str(status_code))
-        return "Error code " + str(status_code)
-
-    for ele in carreras:
-        if len(str(ele)) <= 2:
-            new_carreras.append(ele)
-
-    index = 0
-    flag = False
-    cat = ''
-    for i in range(0, len(title)):
-        n = num_partidos[i]
-        
-        if fun.esta(fun.formatFecha(fecha_hoy), title[i]):
-            flag = True
-        else:
-            flag = False
-
-        if flag:    
-            cadena = title[i] + '\n'
-        
-        for x in range(0, 2*n, 1):
-            if flag:
-                cadena = cadena + team[index] + ' ' + new_carreras[index] + '\n'
-            index = index + 1
-            if flag:
-                if index % 2 == 0:
-                    cadena = cadena + '\n'
-        if flag:
-            cat = cat + cadena + '\n'
-            #update.message.reply_text(cadena)
-    if len(cat) == 0:
-        return "No hay partidos hoy" + '\n'
-    return cat
+        return  "Error code " + str(status_code)
 
 def getTableposition(n_table):
-    
     req = requests.get(URL)
     status_code = req.status_code
 

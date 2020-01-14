@@ -2,24 +2,27 @@ import re
 import datetime
 
 def formatFecha(fecha):
-    dia = fecha.day
-    mes = fecha.month
-    ano = fecha.year
-    dateFormat = []
-    str_dia = str_mes = str_ano = ''
-    if dia < 10:
-        str_dia = '0' + str(dia)
-    else:
-        str_dia = str(dia)
+    if fecha == None:
+        return '---'
+    else:   
+        dia = fecha.day
+        mes = fecha.month
+        ano = fecha.year
+        dateFormat = []
+        str_dia = str_mes = str_ano = ''
+        if dia < 10:
+            str_dia = '0' + str(dia)
+        else:
+            str_dia = str(dia)
 
-    if mes < 10:
-        str_mes = '0' + str(mes)
-    else:
-        str_mes = str(mes)
+        if mes < 10:
+            str_mes = '0' + str(mes)
+        else:
+            str_mes = str(mes)
 
-    str_ano = str(ano)
+        str_ano = str(ano)
 
-    return str_dia + '/' + str_mes + '/' + str_ano
+        return str_dia + '/' + str_mes + '/' + str_ano
 
 def esta(patron, cadena):
     return re.search(patron, cadena) != None
@@ -55,3 +58,36 @@ def Space_Matrix(Matrix, fila, columna):
     for i in range(0, fila):
         for j in range(0, columna):
             Matrix[i][j] = Space(Matrix[i][j])
+
+def getPartidos(table, fecha):
+    partidos = ''
+    flag = False
+
+    for table in table:
+        th = table.find_all('th')
+        td = table.find_all('td')
+
+        cat = ''
+        
+        for i, th in enumerate(th):
+            if i == 2:
+                break
+            else:
+                if esta(formatFecha(fecha), th.getText()):
+                    flag = True
+                cat = cat + th.getText() + '\n'
+            
+        L = []      
+        for td in td:
+            L.append(td.getText())
+                
+        cat = cat + ' ' + L[2] + ' ' + L[3] + '\n'
+        cat = cat + ' ' + L[6] + ' ' + L[7] + '\n'
+        partidos = partidos + cat
+        if flag:
+            return cat
+    
+    if fecha != None:
+        return "No hay partidos hoy"    
+    else:
+        return partidos

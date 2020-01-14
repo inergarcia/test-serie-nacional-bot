@@ -1,5 +1,5 @@
 import logging
-from telegram import InlineKeyboardButton, InlineKeyboardMarkup
+from telegram import InlineKeyboardButton, InlineKeyboardMarkup, KeyboardButton, ReplyKeyboardMarkup
 from telegram.ext import Updater, CommandHandler, MessageHandler, Filters, CallbackQueryHandler
 from bs4 import BeautifulSoup
 import requests
@@ -33,9 +33,11 @@ def start(update, context):
     cartel = cartel + manito + '  Partidos' + '\n'
     cartel = cartel + manito + '  Posisiones' + '\n'
     update.message.reply_text(cartel)
-    update.message.reply_text('/menu')
- 
 
+    key = [[KeyboardButton('/menu')]]
+    key_markup = ReplyKeyboardMarkup(key, one_time_keyboard = False, resize_keyboard = True)
+    context.bot.send_message(chat_id = update.effective_chat.id, text='Menu', reply_markup=key_markup)
+ 
 def menu(update, context):
     keyboard = [[InlineKeyboardButton("Partidos", callback_data="1"),
                  InlineKeyboardButton("Partidos de Hoy", callback_data="2")],

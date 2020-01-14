@@ -1,5 +1,6 @@
 import re
 import datetime
+import emoji
 
 def formatFecha(fecha):
     if fecha == None:
@@ -58,6 +59,57 @@ def Space_Matrix(Matrix, fila, columna):
     for i in range(0, fila):
         for j in range(0, columna):
             Matrix[i][j] = Space(Matrix[i][j])
+
+def emojize_cat(cadena):
+    if re.search("PRI", cadena) != None:
+        cat = cadena.replace("PRI", emoji.emojize(':fallen_leaf:PRI'))
+        cadena = cat
+    if re.search("MAY", cadena) != None:
+        cat = cadena.replace("MAY", emoji.emojize(':tornado:MAY'))
+        cadena = cat
+    if re.search("IND", cadena) != None:
+        cat = cadena.replace("IND", emoji.emojize('🦁IND'))
+        cadena = cat
+    if re.search("ART", cadena) != None:
+        cat = cadena.replace("ART", emoji.emojize(':bow_and_arrow:ART'))
+        cadena = cat
+    if re.search("MTZ", cadena) != None:
+        cat = cadena.replace("MTZ", emoji.emojize(':crocodile:MTZ'))
+        cadena = cat
+    if re.search("IJV", cadena) != None:
+        cat = cadena.replace("IJV", emoji.emojize(':pirate_flag:IJV'))
+        cadena = cat
+    if re.search("CFG", cadena) != None:
+        cat = cadena.replace("CFG", emoji.emojize(':elephant:CFG'))
+        cadena = cat
+    if re.search("VCL", cadena) != None:
+        cat = cadena.replace("VCL", emoji.emojize(':leopard:VCL'))
+        cadena = cat
+    if re.search("SSP", cadena) != None:
+        cat = cadena.replace("SSP", emoji.emojize(':rooster:SSP'))
+        cadena = cat
+    if re.search("CAV", cadena) != None:
+        cat = cadena.replace("CAV", emoji.emojize(':tiger_face:CAV'))
+        cadena = cat
+    if re.search("CMG", cadena) != None:    
+        cat = cadena.replace("CMG", emoji.emojize(':ox:CMG'))
+        cadena = cat
+    if re.search("LTU", cadena) != None:
+        cat = cadena.replace("LTU", emoji.emojize(':axe:LTU'))
+        cadena = cat
+    if re.search("GRA", cadena) != None:
+        cat = cadena.replace("GRA", emoji.emojize(':horse_face:GRA'))
+        cadena = cat
+    if re.search("HOL", cadena) != None:
+        cat = cadena.replace("HOL", emoji.emojize(':dog_face:HOL'))
+        cadena = cat
+    if re.search("SCU", cadena) != None:
+        cat = cadena.replace("SCU", emoji.emojize(':honeybee:SCU'))
+        cadena = cat
+    if re.search("GTM", cadena) != None:
+        cat = cadena.replace("GTM", emoji.emojize(':moai:GTM'))
+        cadena = cat
+    return cadena
 
 def getPartidos(table, fecha):
     partidos = ''

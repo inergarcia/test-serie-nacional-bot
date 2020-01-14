@@ -76,7 +76,7 @@ def getPlayStatus():
 
         table = html.find_all('table', {'class' : 'fpgame'})
         
-        return fun.getPartidos(table, None)
+        return fun.emojize_cat(fun.getPartidos(table, None))
 
     else:
         return  "Error code " + str(status_code)
@@ -91,7 +91,7 @@ def getPlayHoy():
 
         table = html.find_all('table', {'class' : 'fpgame'})
         fecha_hoy = datetime.datetime.now()
-        return fun.getPartidos(table, fecha_hoy)
+        return fun.emojize_cat(fun.getPartidos(table, fecha_hoy))
     else:
         return  "Error code " + str(status_code)
 
@@ -116,13 +116,13 @@ def getTableposition(n_table):
             cat = ''
             for c in range(0, L[1]):
                 if f == 0 and c == 0:
-                    cat = ' ' + cat + str(TABLE[f][c]) + '   '
+                    cat = ' ' + cat + str(TABLE[f][c]) + '        '
                 else:
                     cat = cat + str(TABLE[f][c]) + ' '
             men = men + cat + '\n'
 
         #update.message.reply_text(men)
-        return men
+        return fun.emojize_cat(men)
     else:
         #update.message.reply_text("Error code:" + str(status_code))
         return  "Error code:" + str(status_code)
